@@ -2,26 +2,28 @@
 
 
 
-# [Project Name] 🎯
+# [Wall of Shame] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [Buggers]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
+- Team Lead: [] - [College of Engineering Chengannur]
 - Member 2: [Name] - [College]
 - Member 3: [Name] - [College]
 
 ### Project Description
-[2-3 lines about what your project does]
+[Wall of Shame turns deadlines into friendly high-stakes challenges. Your friends pick an embarrassing photo of you when a task is set, and if you miss the deadline, it hits the Wall of Shame. Finish on time, stay safe, and keep your dignity!]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[People procrastinate not because they lack goals, but because missing deadlines often has no immediate consequences. Unlike reminders and streaks, which depend on self-discipline, procrastination needs a stronger reason to act now.
+]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[Wall of Shame turns deadlines into social accountability. Friends upload an embarrassing photo that stays hidden until the deadline. Complete the task and prove it to keep the photo hidden; miss it, and the photo is automatically revealed on the group’s private wall.
+]
 
 ## Technical Details
 ### Technologies/Components Used
