@@ -11,8 +11,8 @@
 
 ### Team Members
 - Team Lead: [] - [College of Engineering Chengannur]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Member 2: [Devananda P Nair] - [College of Engineering Chengannur]
+- Member 3: [Leesa Serin Ison] - [College of Engineering Chengannur]
 
 ### Project Description
 [Wall of Shame turns deadlines into friendly high-stakes challenges. Your friends pick an embarrassing photo of you when a task is set, and if you miss the deadline, it hits the Wall of Shame. Finish on time, stay safe, and keep your dignity!]
