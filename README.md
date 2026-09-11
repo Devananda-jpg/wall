@@ -15,7 +15,7 @@
 - Member 2: [Leesa Serin Ison] - [College of Engineering Chengannur]
 
 ### Project Description
-[Wall of Shame turns deadlines into friendly high-stakes challenges. Your friends pick an embarrassing photo of you when a task is set, and if you miss the deadline, it hits the Wall of Shame. Finish on time, stay safe, and keep your dignity!]
+[Wall of Shame turns deadlines into friendly high-stakes challenges. Your friends pick an embarrassing photo of you and if you miss the deadline, it hits the Wall of Shame. Finish on time, stay safe, and keep your dignity!]
 
 ### The Problem (that doesn't exist)
 [People procrastinate not because they lack goals, but because missing deadlines often has no immediate consequences. Unlike reminders and streaks, which depend on self-discipline, procrastination needs a stronger reason to act now.
@@ -32,11 +32,6 @@ For Software:
 - [None]
 - [Firebase SDK, Supabase JavaScript Client]
 - [Visual Studio Code, Firebase, Supabase, GitHub]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
 
 ### Implementation
 For Software:
