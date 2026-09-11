@@ -28,10 +28,10 @@
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [ HTML, CSS, JavaScript]
+- [None]
+- [Firebase SDK, Supabase JavaScript Client]
+- [Visual Studio Code, Firebase, Supabase, GitHub]
 
 For Hardware:
 - [List main components]
