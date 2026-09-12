@@ -70,7 +70,6 @@ The Wall of Shame web application is implemented using HTML, CSS, and JavaScript
 
    
 # Installation
-## Installation
 
 ### Prerequisites
 
@@ -112,12 +111,6 @@ The project does not require Node.js, npm, or any additional framework installat
 
 
 
-
-# Run
-[commands]
-
-
-
 ### Project Documentation
 For Software:# Project Documentation
 ## 1) Project Overview
@@ -131,7 +124,7 @@ For Software:# Project Documentation
 4. A user creates a task with a deadline.
 5. The deadline is displayed on the home page with a countdown timer.
 6. The user marks the task as completed using the **“I finished this”** checkbox.
-7. If the deadline expires without completion, the task is considered missed.
+7. If the deadline expires without being completed, the task is considered missed.
 8. The corresponding stake photo is retrieved from storage.
 9. The photo is displayed on the **Wall of Shame**.
 
@@ -210,54 +203,19 @@ The system provides a simple and fun way for friends to maintain accountability.
 
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
+Drive Link: https://drive.google.com/drive/folders/1rRIIlsSRS5O3y03G5z1S_VW9V0X6pQMq?usp=sharing
+Screenshot 1: Describes the friends in a team, the one who logs in can send their friend's emmbrassing photos
+Screenshot 2: Describes the home page that is the Wall of Shame where friend's emmbrassing photo is uploaded after deadline is passed and work is not marked as finished.
+Screenshot 3: Shows our active deadlines and friend's deadlines 
 
-
-*Add caption explaining what this shows*
-
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
-
-
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+https://drive.google.com/file/d/1QWl-levV-Eh3TXcBVQNNaaGzO5WBI636/view?usp=sharing
 
-# Additional Demos
-[Add any extra demo materials/links]
+Showed in log in and joining team functionalities and we see the embarasssing photos going live.
 
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
-
----
 Made with ❤️ at TinkerHub Useless Projects 
 
 ![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
 ![Static Badge](https://img.shields.io/badge/UselessProjects--26-26?link=https%3A%2F%2Ftinkerhub.org%2Fevents%2F1M8ORET9A1%2Fuseless-projects-3.0)
-
-
-
