@@ -1,0 +1,1895 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wall of Shame</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #120b08;
+            color: #f5f5f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: "Courier New", monospace;
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.32),
+                    rgba(0, 0, 0, 0.32)
+                ),
+                linear-gradient(
+                    90deg,
+                    transparent 0,
+                    transparent 48%,
+                    #0b0705 48%,
+                    #0b0705 52%,
+                    transparent 52%
+                ),
+                linear-gradient(
+                    0deg,
+                    transparent 0,
+                    transparent 93%,
+                    #0b0705 93%,
+                    #0b0705 100%
+                ),
+                linear-gradient(
+                    90deg,
+                    #3a2118 0,
+                    #3a2118 50%,
+                    #2b1711 50%,
+                    #2b1711 100%
+                );
+            background-size:
+                auto,
+                96px 54px,
+                96px 54px,
+                96px 54px;
+            background-position:
+                0 0,
+                48px 0,
+                0 0,
+                0 0;
+        }
+
+        body,
+        button,
+        input {
+            font-family: "Courier New", monospace;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #111;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 25px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .create-deadline-btn {
+            margin-top: 18px;
+            background: #f5f5f5;
+            color: #111;
+            border: none;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .create-deadline-btn:hover {
+            background: #8ff9e7;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* WALL OF SHAME */
+
+        .wall-section {
+            background: #151515;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+
+            box-shadow: 0 4px 25px rgba(0,0,0,0.35);
+        }
+
+        .section-title {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .wall-empty {
+            text-align: center;
+            padding: 35px 20px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* PHOTO GRID */
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .photo-card {
+            border: 10px solid #e8e0c8;
+            border-bottom-width: 42px;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #e8e0c8;
+            box-shadow: 8px 8px 0 #000, 0 12px 25px rgba(0,0,0,0.45);
+            transform: rotate(-1deg);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .photo-card:nth-child(even) {
+            transform: rotate(1.5deg);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) rotate(0);
+            box-shadow: 10px 15px 28px rgba(0,0,0,0.6);
+        }
+
+        .wall-deadline-card {
+            position: relative;
+        }
+
+        .wall-deadline-card .photo-placeholder {
+            min-height: 320px;
+            filter: blur(9px);
+            opacity: 0.55;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2de2c2,
+                    #5c6cff 45%,
+                    #ff4d6d
+                );
+        }
+
+        .wall-deadline-card .photo-info {
+            filter: none;
+        }
+
+        .locked-stamp {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg);
+            padding: 8px 12px;
+            border: 3px solid #ffffff;
+            color: #ffffff;
+            background: #111;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 1;
+        }
+
+        .wall-deadline-card.complete-away {
+            animation: wall-pop-away 0.65s ease-in forwards;
+            pointer-events: none;
+        }
+
+        @keyframes wall-pop-away {
+            0% {
+                transform: scale(1) rotate(1deg);
+                opacity: 1;
+            }
+            45% {
+                transform: scale(1.12) rotate(-4deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(12deg);
+                opacity: 0;
+            }
+        }
+
+        .photo-placeholder {
+            min-height: 320px;
+            background: #292929;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 50px;
+        }
+
+        .photo-info {
+            padding: 12px 6px 0;
+            background: #e8e0c8;
+            color: #171717;
+        }
+
+        .photo-info h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .photo-info p {
+            color: #4d493e;
+            font-size: 12px;
+        }
+
+        /* DEADLINES */
+
+        .deadlines-section {
+            background: #151515;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+
+            box-shadow: 0 4px 25px rgba(0,0,0,0.35);
+        }
+
+        .deadline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .deadline-card {
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            transition: 0.2s;
+        }
+
+        .deadline-card:hover {
+            border-color: #2de2c2;
+        }
+
+        .deadline-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .deadline-icon {
+            width: 42px;
+            height: 42px;
+            position: relative;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            background: transparent;
+        }
+
+        .deadline-icon::before {
+            content: "";
+            position: absolute;
+            top: 9px;
+            left: 7px;
+            width: 24px;
+            height: 19px;
+            border: 2px solid #ffffff;
+            background:
+                linear-gradient(
+                    to bottom,
+                    #ffffff 0,
+                    #ffffff 3px,
+                    transparent 3px,
+                    transparent 100%
+                );
+        }
+
+        .deadline-icon::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 12px;
+            width: 3px;
+            height: 8px;
+            background: #ffffff;
+            box-shadow: 12px 0 #ffffff;
+        }
+
+        .deadline-info h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .deadline-info p {
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        .deadline-owner {
+            color: #8ff9e7 !important;
+            font-size: 11px !important;
+            margin-top: 4px;
+        }
+
+        .deadline-right {
+            text-align: right;
+        }
+
+        .time-remaining {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .deadline-date {
+            color: #777;
+            font-size: 11px;
+        }
+
+        /* CHECKBOX */
+
+        .finish-box {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        .finish-box input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .completed {
+            background: #18351f;
+            border-color: #4caf50;
+            animation: completed-pop 0.55s ease-out;
+        }
+
+        .completed .task-name {
+            text-decoration: line-through;
+            color: #9be7a5;
+        }
+
+        .missed {
+            background: #351818;
+            border-color: #d32f2f;
+        }
+
+        .missed-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .not-your-deadline {
+            color: #aaa;
+            font-size: 11px;
+        }
+
+        .no-deadlines {
+            text-align: center;
+            padding: 25px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .photo-card img {
+            width: 100%;
+            min-height: 320px;
+            max-height: 520px;
+            object-fit: contain;
+            background: #090909;
+            display: block;
+        }
+
+        .fun-figure {
+            position: fixed;
+            z-index: 0;
+            width: 34px;
+            height: 44px;
+            pointer-events: none;
+            animation: float-around 7s ease-in-out infinite;
+            border: 3px solid #2de2c2;
+            background: #171717;
+            image-rendering: pixelated;
+        }
+
+        .fun-figure::before,
+        .fun-figure::after {
+            content: "";
+            position: absolute;
+            background: #2de2c2;
+        }
+
+        .fun-figure::before {
+            width: 7px;
+            height: 7px;
+            top: 10px;
+            left: 7px;
+            box-shadow: 10px 0 #2de2c2;
+        }
+
+        .fun-figure::after {
+            width: 14px;
+            height: 3px;
+            left: 7px;
+            bottom: 9px;
+        }
+
+        .fun-figure.one {
+            top: 16%;
+            left: 3%;
+        }
+
+        .fun-figure.two {
+            right: 4%;
+            bottom: 12%;
+            animation-delay: -3s;
+            border-color: #ff4d6d;
+        }
+
+        .fun-figure.two::before,
+        .fun-figure.two::after {
+            background: #ff4d6d;
+        }
+
+        .fun-figure.two::before {
+            box-shadow: 10px 0 #ff4d6d;
+        }
+
+        .fun-figure.three {
+            top: 48%;
+            right: 2%;
+            width: 28px;
+            height: 28px;
+            border-color: #8ff9e7;
+            animation-delay: -1.5s;
+        }
+
+        .fun-figure.three::before {
+            width: 5px;
+            height: 5px;
+            top: 7px;
+            left: 5px;
+            background: #8ff9e7;
+            box-shadow: 9px 0 #8ff9e7;
+        }
+
+        .fun-figure.three::after {
+            width: 12px;
+            height: 3px;
+            left: 5px;
+            bottom: 6px;
+            background: #8ff9e7;
+        }
+
+        .fun-figure.four {
+            left: 6%;
+            bottom: 18%;
+            width: 26px;
+            height: 38px;
+            border-color: #ff4d6d;
+            animation-delay: -4.5s;
+        }
+
+        .fun-figure.four::before {
+            width: 5px;
+            height: 5px;
+            top: 8px;
+            left: 5px;
+            background: #ff4d6d;
+            box-shadow: 9px 0 #ff4d6d;
+        }
+
+        .fun-figure.four::after {
+            width: 12px;
+            height: 3px;
+            left: 5px;
+            bottom: 7px;
+            background: #ff4d6d;
+        }
+
+        .fun-figure.five,
+        .fun-figure.six {
+            width: 18px;
+            height: 18px;
+            border: 0;
+            animation: pixel-blink 2.2s steps(2, end) infinite;
+        }
+
+        .fun-figure.five {
+            left: 1%;
+            bottom: 34%;
+            background: #2de2c2;
+            box-shadow: 0 0 0 5px #102f2c, 0 0 18px #2de2c2;
+        }
+
+        .fun-figure.six {
+            right: 1%;
+            top: 35%;
+            background: #ff4d6d;
+            box-shadow: 0 0 0 5px #351818, 0 0 18px #ff4d6d;
+            animation-direction: reverse;
+        }
+
+        .fun-figure.seven {
+            left: 9%;
+            top: 68%;
+            width: 22px;
+            height: 30px;
+            border-color: #8b7cff;
+            animation-delay: -2s;
+        }
+
+        .fun-figure.seven::before {
+            background: #8b7cff;
+            box-shadow: 8px 0 #8b7cff;
+        }
+
+        .fun-figure.seven::after {
+            background: #8b7cff;
+        }
+
+        .fun-figure.eight {
+            right: 9%;
+            top: 74%;
+            width: 24px;
+            height: 20px;
+            border-color: #ff9f43;
+            animation-delay: -5s;
+        }
+
+        .fun-figure.eight::before {
+            background: #ff9f43;
+            box-shadow: 8px 0 #ff9f43;
+        }
+
+        .fun-figure.eight::after {
+            background: #ff9f43;
+        }
+
+        @keyframes pixel-blink {
+            0%, 85%, 100% { transform: scale(1); opacity: 1; }
+            90% { transform: scale(0.45); opacity: 0.45; }
+        }
+
+        .confetti {
+            position: fixed;
+            z-index: 5;
+            width: 10px;
+            height: 16px;
+            pointer-events: none;
+            animation: confetti-fall 1.2s ease-out forwards;
+        }
+
+        @keyframes float-around {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-18px) rotate(8deg); }
+        }
+
+        @keyframes completed-pop {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.04) rotate(-1deg); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+            100% { transform: translate(var(--x), 80vh) rotate(540deg); opacity: 0; }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 20px;
+            }
+
+            .container {
+                margin-top: 20px;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .deadline-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .deadline-right {
+                text-align: left;
+                margin-left: 56px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="fun-figure one" aria-hidden="true"></div>
+    <div class="fun-figure two" aria-hidden="true"></div>
+    <div class="fun-figure three" aria-hidden="true"></div>
+    <div class="fun-figure four" aria-hidden="true"></div>
+    <div class="fun-figure five" aria-hidden="true"></div>
+    <div class="fun-figure six" aria-hidden="true"></div>
+    <div class="fun-figure seven" aria-hidden="true"></div>
+    <div class="fun-figure eight" aria-hidden="true"></div>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="header-content">
+
+            <h1>
+                Wall of Shame 😈
+            </h1>
+
+            <p id="teamNameDisplay">
+                Team: Loading...
+            </p>
+
+            <button
+                class="create-deadline-btn"
+                onclick="createDeadline()"
+            >
+                + Create a Deadline
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- =========================
+             WALL OF SHAME
+        ========================= -->
+
+        <section class="wall-section">
+
+            <h2 class="section-title">
+                Wall of Shame 😈
+            </h2>
+
+            <p class="section-subtitle">
+                Missed deadlines have consequences!
+            </p>
+
+
+            <div
+                class="photo-grid"
+                id="shamePhotoGrid"
+            >
+
+                <div class="wall-empty">
+                    Nobody has missed a deadline yet. 😌
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             MY ACTIVE DEADLINES
+        ========================= -->
+
+        <section class="deadlines-section">
+
+            <h2 class="section-title">
+                My Active Deadlines ⏰
+            </h2>
+
+            <p class="section-subtitle">
+                Complete your task before the deadline.
+            </p>
+
+
+            <div
+                class="deadline-list"
+                id="myDeadlineList"
+            >
+
+                <div class="no-deadlines">
+                    Loading deadlines...
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             OTHER TEAM DEADLINES
+        ========================= -->
+
+        <section class="deadlines-section">
+
+            <h2 class="section-title">
+                Other Team Deadlines 👥
+            </h2>
+
+            <p class="section-subtitle">
+                See what your teammates are supposed to finish.
+            </p>
+
+
+            <div
+                class="deadline-list"
+                id="otherDeadlineList"
+            >
+
+                <div class="no-deadlines">
+                    Loading deadlines...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         FIREBASE
+    ========================= -->
+
+    <script type="module">
+
+        import {
+            db,
+            auth
+        }
+        from "./firebase-config.js";
+
+
+        import {
+            doc,
+            getDoc,
+            collection,
+            getDocs,
+            query,
+            where,
+            orderBy,
+            updateDoc
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+import { supabase } from "./supabase-config.js";
+        /* =========================
+           CREATE DEADLINE
+        ========================= */
+
+        window.createDeadline = function() {
+
+            window.location.href =
+                "create-deadline.html";
+
+        };
+
+
+
+        /* =========================
+           GET USER INFORMATION
+        ========================= */
+
+        async function loadUserData(user) {
+
+            try {
+
+                const userRef =
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    );
+
+                const userSnap =
+                    await getDoc(userRef);
+
+
+                if (!userSnap.exists()) {
+
+                    console.log(
+                        "User document not found"
+                    );
+
+                    return;
+
+                }
+
+
+                const userData =
+                    userSnap.data();
+
+
+                /*
+                 * Get team ID
+                 */
+
+                let teamId =
+                    userData.teamId;
+
+                if (!teamId) {
+                    const teamQuery =
+                        query(
+                            collection(db, "teams"),
+                            where(
+                                "members",
+                                "array-contains",
+                                user.uid
+                            )
+                        );
+
+                    const teamSnapshot =
+                        await getDocs(teamQuery);
+
+                    if (!teamSnapshot.empty) {
+                        teamId =
+                            teamSnapshot.docs[0].id;
+
+                        await updateDoc(
+                            userRef,
+                            {
+                                teamId: teamId
+                            }
+                        );
+                    }
+                }
+
+
+                if (!teamId) {
+
+                    document.getElementById(
+                        "teamNameDisplay"
+                    ).textContent =
+                        "Team: No team";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Get team document
+                 */
+
+                const teamRef =
+                    doc(
+                        db,
+                        "teams",
+                        teamId
+                    );
+
+
+                const teamSnap =
+                    await getDoc(teamRef);
+
+
+                if (teamSnap.exists()) {
+
+                    const teamData =
+                        teamSnap.data();
+
+
+                    document.getElementById(
+                        "teamNameDisplay"
+                    ).textContent =
+                        "Team: " +
+                        teamData.name;
+
+                }
+
+
+                /*
+                 * Load deadlines
+                 */
+
+                loadDeadlines(
+                    teamId,
+                    user.uid
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading user:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================
+           LOAD DEADLINES
+        ========================= */
+
+        async function loadDeadlines(
+            teamId,
+            currentUserId
+        ) {
+
+            const myList =
+                document.getElementById(
+                    "myDeadlineList"
+                );
+
+
+            const otherList =
+                document.getElementById(
+                    "otherDeadlineList"
+                );
+
+
+            try {
+
+                /*
+                 * Get deadlines belonging
+                 * to this team.
+                 */
+
+                const teamSnap =
+                    await getDoc(
+                        doc(db, "teams", teamId)
+                    );
+
+                const members =
+                    teamSnap.exists()
+                    ? teamSnap.data().members || []
+                    : [currentUserId];
+
+                const allDeadlines =
+                    await getDocs(
+                        collection(db, "deadlines")
+                    );
+
+                const snapshotDocs =
+                    allDeadlines.docs
+                    .filter(
+                        function(deadlineDoc) {
+                            const data =
+                                deadlineDoc.data();
+
+                            return (
+                                data.teamId === teamId ||
+                                members.includes(data.createdBy)
+                            );
+                        }
+                    )
+                    .sort(
+                        function(a, b) {
+                            const firstDeadline =
+                                a.data().deadline;
+
+                            const secondDeadline =
+                                b.data().deadline;
+
+                            const firstTime =
+                                firstDeadline &&
+                                typeof firstDeadline.toMillis ===
+                                    "function"
+                                ? firstDeadline.toMillis()
+                                : new Date(firstDeadline).getTime();
+
+                            const secondTime =
+                                secondDeadline &&
+                                typeof secondDeadline.toMillis ===
+                                    "function"
+                                ? secondDeadline.toMillis()
+                                : new Date(secondDeadline).getTime();
+
+                            return (
+                                firstTime -
+                                secondTime
+                            );
+                        }
+                    );
+
+                await loadWallOfShame(snapshotDocs);
+
+                myList.innerHTML = "";
+                otherList.innerHTML = "";
+
+                const memberNames =
+                    {};
+
+                await Promise.all(
+                    members.map(
+                        async function(memberId) {
+                            const memberSnap =
+                                await getDoc(
+                                    doc(
+                                        db,
+                                        "users",
+                                        memberId
+                                    )
+                                );
+
+                            memberNames[memberId] =
+                                memberSnap.exists()
+                                ? memberSnap.data().name ||
+                                  "Team Member"
+                                : "Team Member";
+                        }
+                    )
+                );
+
+
+                let myCount = 0;
+                let otherCount = 0;
+
+
+                snapshotDocs.forEach(
+                    function(deadlineDoc) {
+
+                        const data =
+                            deadlineDoc.data();
+
+
+                        if (
+                            data.createdBy ===
+                            currentUserId
+                        ) {
+
+                            createDeadlineCard(
+                                deadlineDoc.id,
+                                data,
+                                myList,
+                                true,
+                                memberNames[data.createdBy]
+                            );
+
+                            myCount++;
+
+                        }
+
+                        else {
+
+                            createDeadlineCard(
+                                deadlineDoc.id,
+                                data,
+                                otherList,
+                                false,
+                                memberNames[data.createdBy]
+                            );
+
+                            otherCount++;
+
+                        }
+
+                    }
+                );
+
+
+                if (myCount === 0) {
+
+                    myList.innerHTML = `
+                        <div class="no-deadlines">
+                            You don't have any active deadlines yet. 🎉
+                        </div>
+                    `;
+
+                }
+
+
+                if (otherCount === 0) {
+
+                    otherList.innerHTML = `
+                        <div class="no-deadlines">
+                            No other team deadlines yet.
+                        </div>
+                    `;
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading deadlines:",
+                    error
+                );
+
+
+                myList.innerHTML = `
+                    <div class="no-deadlines">
+                        Could not load your deadlines.
+                    </div>
+                `;
+
+
+                otherList.innerHTML = `
+                    <div class="no-deadlines">
+                        Could not load team deadlines.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================
+           CREATE DEADLINE CARD
+        ========================= */
+
+        function createDeadlineCard(
+            deadlineId,
+            data,
+            container,
+            isMine,
+            memberName
+        ) {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "deadline-card";
+
+
+            const deadlineDate =
+                data.deadline &&
+                typeof data.deadline.toDate ===
+                    "function"
+                ? data.deadline.toDate()
+                : new Date(data.deadline);
+
+
+            card.innerHTML = `
+
+                <div class="deadline-left">
+
+                    <div class="deadline-icon">
+                    </div>
+
+
+                    <div class="deadline-info">
+
+                        <h3 class="task-name">
+                            ${data.task}
+                        </h3>
+
+
+                        <p>
+                            Deadline:
+                            ${deadlineDate.toLocaleString()}
+                        </p>
+
+                        <p class="deadline-owner">
+                            Set by: ${memberName || "Team Member"}
+                        </p>
+
+
+                        ${
+                            isMine
+                            ?
+                            `
+                            <label class="finish-box">
+
+                                <input
+                                    type="checkbox"
+                                    id="check-${deadlineId}"
+                                >
+
+                                I finished this
+
+                            </label>
+                            `
+                            :
+                            `
+                            <div class="not-your-deadline">
+                                Created by another team member
+                            </div>
+                            `
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="deadline-right">
+
+                    <div
+                        class="time-remaining"
+                        id="time-${deadlineId}"
+                    >
+                        Calculating...
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+
+            /*
+             * If this is our deadline,
+             * listen for checkbox.
+             */
+
+            if (isMine) {
+
+                const checkbox =
+                    document.getElementById(
+                        "check-" +
+                        deadlineId
+                    );
+
+
+                /*
+                 * If already completed,
+                 * tick the checkbox.
+                 */
+
+                if (
+                    data.status ===
+                    "completed"
+                ) {
+
+                    checkbox.checked = true;
+
+                    card.classList.add(
+                        "completed"
+                    );
+
+                }
+
+
+                checkbox.addEventListener(
+                    "change",
+                    async function() {
+
+                        if (
+                            checkbox.checked
+                        ) {
+
+                            try {
+
+                                await updateDoc(
+                                    doc(
+                                        db,
+                                        "deadlines",
+                                        deadlineId
+                                    ),
+                                    {
+                                        status:
+                                            "completed"
+                                    }
+                                );
+
+                                card.classList.add(
+                                    "completed"
+                                );
+
+                                const wallCard =
+                                    document.querySelector(
+                                        '[data-deadline-id="' +
+                                        deadlineId +
+                                        '"]'
+                                    );
+
+                                if (wallCard) {
+                                    wallCard.classList.add(
+                                        "complete-away"
+                                    );
+
+                                    setTimeout(
+                                        function() {
+                                            wallCard.remove();
+                                        },
+                                        700
+                                    );
+                                }
+
+                                celebrateCompletion();
+
+                            } catch (error) {
+
+                                console.error(
+                                    error
+                                );
+
+                                checkbox.checked =
+                                    false;
+
+                                alert(
+                                    "Could not save completion."
+                                );
+
+                            }
+
+                        }
+
+                        else {
+
+                            try {
+
+                                await updateDoc(
+                                    doc(
+                                        db,
+                                        "deadlines",
+                                        deadlineId
+                                    ),
+                                    {
+                                        status:
+                                            "active"
+                                    }
+                                );
+
+
+                                card.classList.remove(
+                                    "completed"
+                                );
+
+                            } catch (error) {
+
+                                console.error(
+                                    error
+                                );
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /*
+             * Start countdown.
+             */
+
+            startCountdown(
+                deadlineId,
+                deadlineDate,
+                data.status
+            );
+
+        }
+
+        function celebrateCompletion() {
+            const colors = [
+                "#2de2c2",
+                "#8ff9e7",
+                "#4caf50",
+                "#5c6cff",
+                "#ffffff"
+            ];
+
+            for (let index = 0; index < 28; index++) {
+                const piece =
+                    document.createElement("span");
+
+                piece.className = "confetti";
+                piece.style.left =
+                    (45 + Math.random() * 10) + "vw";
+                piece.style.top = "18vh";
+                piece.style.background =
+                    colors[index % colors.length];
+                piece.style.setProperty(
+                    "--x",
+                    ((Math.random() - 0.5) * 70) + "vw"
+                );
+
+                document.body.appendChild(piece);
+
+                setTimeout(
+                    function() {
+                        piece.remove();
+                    },
+                    1400
+                );
+            }
+        }
+
+
+
+        /* =========================
+           COUNTDOWN
+        ========================= */
+
+        function startCountdown(
+            deadlineId,
+            deadlineDate,
+            status
+        ) {
+
+            const element =
+                document.getElementById(
+                    "time-" +
+                    deadlineId
+                );
+
+            if (!element) {
+                return;
+            }
+
+
+            function updateCountdown() {
+
+                const now =
+                    new Date();
+
+
+                const difference =
+                    deadlineDate -
+                    now;
+
+
+                /*
+                 * Completed
+                 */
+
+                if (
+                    status ===
+                    "completed"
+                ) {
+
+                    element.textContent =
+                        "Completed ✅";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Deadline passed
+                 */
+
+                if (
+                    difference <= 0
+                ) {
+
+                    element.textContent =
+                        "DEADLINE MISSED 🚨";
+
+                    element.classList.add(
+                        "missed-text"
+                    );
+
+                    return;
+
+                }
+
+
+                const days =
+                    Math.floor(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+
+                const hours =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60 * 60 * 24)
+                        ) /
+                        (1000 * 60 * 60)
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60 * 60)
+                        ) /
+                        (1000 * 60)
+                    );
+
+
+                const seconds =
+                    Math.floor(
+                        (
+                            difference %
+                            (1000 * 60)
+                        ) /
+                        1000
+                    );
+
+
+                element.textContent =
+                    days + "d " +
+                    hours + "h " +
+                    minutes + "m " +
+                    seconds + "s";
+
+            }
+
+
+            updateCountdown();
+
+
+            setInterval(
+                updateCountdown,
+                1000
+            );
+
+        }
+
+/* =========================
+   LOAD WALL OF SHAME
+========================= */
+
+async function loadWallOfShame(deadlines) {
+
+    const wall =
+        document.getElementById("shamePhotoGrid");
+
+    wall.innerHTML = "";
+
+    let missedCount = 0;
+
+    for (const deadline of deadlines) {
+
+        const data = deadline.data();
+
+        const deadlineDate =
+            data.deadline &&
+            typeof data.deadline.toDate ===
+                "function"
+            ? data.deadline.toDate()
+            : new Date(data.deadline);
+
+        const now = new Date();
+
+        if (
+            deadlineDate > now &&
+            data.status !== "completed"
+        ) {
+            missedCount++;
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "photo-card wall-deadline-card";
+            card.dataset.deadlineId =
+                deadline.id;
+
+            card.innerHTML = `
+                <div class="photo-placeholder"></div>
+                <div class="locked-stamp">LOCKED</div>
+                <div class="photo-info">
+                    <h3>Deadline In Progress</h3>
+                    <p>${data.task}</p>
+                </div>
+            `;
+
+            wall.appendChild(card);
+            continue;
+        }
+
+        if (data.status === "completed") {
+            continue;
+        }
+
+        // A missed deadline stays on the wall permanently.
+        if (deadlineDate <= now) {
+
+            missedCount++;
+
+            const memberId =
+                data.createdBy;
+
+            try {
+
+                // Find photos inside the member's folder
+                const { data: files, error } =
+                    await supabase.storage
+                    .from("wall-of-shame-photos")
+                    .list(memberId, {
+                        limit: 1000,
+                        sortBy: {
+                            column: "created_at",
+                            order: "desc"
+                        }
+                    });
+
+                if (error) {
+                    console.error(error);
+                    continue;
+                }
+
+                // No photo found
+                if (!files || files.length === 0) {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className = "photo-card";
+                    card.dataset.deadlineId =
+                        deadline.id;
+
+                    card.innerHTML = `
+                        <div class="photo-placeholder">
+                            😈
+                        </div>
+
+                        <div class="photo-info">
+                            <h3>Deadline Missed 🚨</h3>
+                            <p>${data.task}</p>
+                        </div>
+                    `;
+
+                    wall.appendChild(card);
+
+                    continue;
+                }
+
+                // Pick a different photo at random on each refresh.
+                const imageFiles =
+                    files
+                    .filter(
+                        file =>
+                            file.name &&
+                            file.metadata
+                    );
+
+                const selectedFile =
+                    imageFiles[
+                        Math.floor(
+                            Math.random() *
+                            imageFiles.length
+                        )
+                    ];
+
+                if (!selectedFile) {
+                    console.error(
+                        "Storage folder contains no image files:",
+                        memberId,
+                        files
+                    );
+                    continue;
+                }
+
+                const photoPath =
+                    memberId +
+                    "/" +
+                    selectedFile.name;
+
+                // Create temporary URL
+                const { data: signedData, error: signedError } =
+                    await supabase.storage
+                    .from("wall-of-shame-photos")
+                    .createSignedUrl(
+                        photoPath,
+                        3600
+                    );
+
+                let photoUrl =
+                    signedData &&
+                    signedData.signedUrl;
+
+                if (!photoUrl) {
+                    console.error(
+                        "Could not create photo URL:",
+                        signedError
+                    );
+
+                    const publicUrl =
+                        supabase.storage
+                        .from("wall-of-shame-photos")
+                        .getPublicUrl(photoPath);
+
+                    photoUrl =
+                        publicUrl &&
+                        publicUrl.data &&
+                        publicUrl.data.publicUrl;
+                }
+
+                if (!photoUrl) {
+                    continue;
+                }
+
+                // Get member name
+                const memberRef =
+                    doc(
+                        db,
+                        "users",
+                        memberId
+                    );
+
+                const memberSnap =
+                    await getDoc(memberRef);
+
+                let memberName =
+                    "Team Member";
+
+                if (memberSnap.exists()) {
+
+                    memberName =
+                        memberSnap.data().name ||
+                        "Team Member";
+
+                }
+
+                // Create photo card
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "photo-card";
+                card.dataset.deadlineId =
+                    deadline.id;
+
+                card.innerHTML = `
+
+                    <img
+                        src="${photoUrl}"
+                        style="
+                            width:100%;
+                            min-height:320px;
+                            max-height:520px;
+                            object-fit:contain;
+                            background:#090909;
+                            display:block;
+                        "
+                    >
+
+                    <div class="photo-info">
+
+                        <h3>
+                            ${memberName} 😈
+                        </h3>
+
+                        <p>
+                            Missed: ${data.task}
+                        </p>
+
+                    </div>
+
+                `;
+
+                wall.appendChild(card);
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Wall of Shame error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+    // Nothing missed
+    if (missedCount === 0) {
+
+        wall.innerHTML = `
+
+            <div class="wall-empty">
+
+                Nobody has missed a deadline yet. 😌
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+        /* =========================
+           AUTHENTICATION
+        ========================= */
+
+        auth.onAuthStateChanged(
+            function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+
+                }
+
+
+                loadUserData(user);
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

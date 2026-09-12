@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall of Shame - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Courier New", monospace;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+        }
+
+        .login-container {
+            width: 380px;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #333;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #5739dd;
+            color: rgb(247, 249, 252);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #333;
+        }
+
+        .signup {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .signup a {
+            color: #111;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        body {
+            background: #080808;
+            color: #f4f0e6;
+            font-family: "Courier New", monospace;
+        }
+
+        body,
+        button,
+        input {
+            font-family: "Courier New", monospace;
+        }
+
+        .login-container {
+            background: #151515;
+            border: 1px solid #343434;
+            box-shadow: 8px 8px 0 #000, 0 0 35px rgba(45, 226, 194, 0.18);
+        }
+
+        .subtitle,
+        .signup {
+            color: #aaa;
+        }
+
+        .input-group input {
+            background: #0d0d0d;
+            color: #f4f0e6;
+            border-color: #3b3b3b;
+        }
+
+        .input-group input:focus {
+            border-color: #2de2c2;
+        }
+
+        .login-btn {
+            background: #2de2c2;
+            color: #111;
+        }
+
+        .login-btn:hover {
+            background: #8ff9e7;
+        }
+
+        .signup a {
+            color: #2de2c2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">Wall of Shame </div>
+
+        <p class="subtitle">
+            Accountability has consequences.
+        </p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn">
+                Log in
+            </button>
+
+        </form>
+
+        <p class="signup">
+            Don't have an account?
+            <a href="signup.html">Sign up</a>
+        </p>
+
+    </div>
+<script type="module">
+    import { auth } from "./firebase-config.js";
+
+    import {
+        signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value;
+
+        const password =
+            document.getElementById("password").value;
+
+        try {
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            alert("Login successful! 🎉");
+
+            sessionStorage.setItem(
+                "requireInitialPhoto",
+                "optional"
+            );
+
+            window.location.href = "team.html";
+
+        } catch (error) {
+            alert("Login failed: " + error.message);
+        }
+    });
+</script>
+</body>
+</html>

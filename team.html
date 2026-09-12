@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - Wall of Shame</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Courier New", monospace;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #111;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .divider {
+            text-align: center;
+            color: #aaa;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        /* Team code box */
+
+        .team-created {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            background: #f3f0ff;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .team-created h3 {
+            margin-bottom: 8px;
+        }
+
+        .team-created p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .code-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .code {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .copy-btn {
+            width: auto;
+            padding: 12px 15px;
+            background: #6c4cff;
+        }
+
+        .copy-btn:hover {
+            background: #5738d4;
+        }
+
+        .copy-message {
+            display: none;
+            margin-top: 10px;
+            color: #2e8b57;
+            font-size: 13px;
+        }
+
+        .join-message {
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: center;
+            color: #555;
+        }
+
+        body {
+            background: #080808;
+            color: #f4f0e6;
+            font-family: "Courier New", monospace;
+        }
+
+        body,
+        button,
+        input {
+            font-family: "Courier New", monospace;
+        }
+
+        .container {
+            background: #151515;
+            border: 1px solid #343434;
+            box-shadow: 8px 8px 0 #000, 0 0 35px rgba(45, 226, 194, 0.18);
+        }
+
+        .subtitle,
+        .divider,
+        .join-message {
+            color: #aaa;
+        }
+
+        input,
+        .code {
+            background: #0d0d0d;
+            color: #f4f0e6;
+            border-color: #3b3b3b;
+        }
+
+        input:focus {
+            border-color: #2de2c2;
+            outline: none;
+        }
+
+        button {
+            background: #2de2c2;
+            color: #111;
+        }
+
+        button:hover {
+            background: #8ff9e7;
+        }
+
+        .team-created {
+            background: #24200d;
+            border: 1px solid #17665d;
+        }
+
+        .team-created p {
+            color: #bbb;
+        }
+
+        .copy-btn {
+            background: #2de2c2;
+        }
+
+        .copy-message {
+            color: #8ee69a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Wall of Shame 😈</h1>
+
+    <p class="subtitle">
+        Get your team together. Things are about to get embarrassing.
+    </p>
+
+
+    <!-- CREATE TEAM -->
+
+    <div class="section">
+
+        <h2>Create a Team</h2>
+
+        <input
+            type="text"
+            id="teamName"
+            placeholder="Enter team name"
+        >
+
+        <button onclick="createTeam()">
+            Create Team
+        </button>
+
+
+        <!-- Generated team code -->
+
+        <div class="team-created" id="teamCreated">
+
+            <h3>Team Created! 🎉</h3>
+
+            <p>
+                Share this code with your team members so they can join.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code" id="teamCode">
+                    WOS-XXXX
+                </div>
+
+                <button class="copy-btn" onclick="copyTeamCode()">
+                    📋 Copy
+                </button>
+
+            </div>
+
+            <div class="copy-message" id="copyMessage">
+                Team code copied! ✅
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="divider">
+        OR
+    </div>
+
+
+    <!-- JOIN TEAM -->
+
+    <div class="section">
+
+        <h2>Join a Team</h2>
+
+        <input
+            type="text"
+            id="joinCode"
+            placeholder="Enter team code"
+        >
+
+        <button onclick="joinTeam()">
+            Join Team
+        </button>
+
+        <div class="join-message" id="joinMessage"></div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+    import { db, auth } from "./firebase-config.js";
+
+   import {
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    updateDoc,
+    doc,
+    arrayUnion
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    // Generate a random team code
+    function generateTeamCode() {
+
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        let randomPart = "";
+
+        for (let i = 0; i < 5; i++) {
+
+            const randomIndex =
+                Math.floor(Math.random() * characters.length);
+
+            randomPart += characters[randomIndex];
+        }
+
+        return "WOS-" + randomPart;
+    }
+
+
+    // Create team
+    window.createTeam = async function() {
+
+        const teamName =
+            document.getElementById("teamName").value.trim();
+
+        if (teamName === "") {
+
+            alert("Please enter a team name.");
+
+            return;
+        }
+
+
+        // Check if user is logged in
+        const user = auth.currentUser;
+
+        if (!user) {
+
+            alert("Please login first.");
+
+            window.location.href = "index.html";
+
+            return;
+        }
+
+
+        try {
+
+            let teamCode;
+            let codeExists = true;
+
+
+            // Keep generating until we get an unused code
+            while (codeExists) {
+
+                teamCode = generateTeamCode();
+
+                const teamQuery = query(
+                    collection(db, "teams"),
+                    where("code", "==", teamCode)
+                );
+
+                const snapshot =
+                    await getDocs(teamQuery);
+
+                codeExists = !snapshot.empty;
+            }
+
+
+            // Save team in Firestore
+            const teamRef = await addDoc(
+                collection(db, "teams"),
+                {
+                    name: teamName,
+                    code: teamCode,
+                    createdBy: user.uid,
+                    members: [user.uid]
+                }
+            );
+
+            await updateDoc(
+                doc(db, "users", user.uid),
+                {
+                    teamId: teamRef.id
+                }
+            );
+
+
+            // Display team code
+            document.getElementById("teamCode").textContent =
+                teamCode;
+
+            document.getElementById("teamCreated").style.display =
+                "block";
+
+
+            alert("Team created successfully! 🎉");
+            continueAfterTeamSetup();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Could not create team: " + error.message);
+
+        }
+
+    };
+
+
+    // Copy team code
+    window.copyTeamCode = function() {
+
+        const teamCode =
+            document.getElementById("teamCode").textContent;
+
+        navigator.clipboard.writeText(teamCode)
+            .then(function() {
+
+                document.getElementById("copyMessage").style.display =
+                    "block";
+
+                setTimeout(function() {
+
+                    document.getElementById("copyMessage").style.display =
+                        "none";
+
+                }, 2000);
+
+            });
+
+    };
+
+
+    // Join team - temporary for now
+
+window.joinTeam = async function() {
+
+    const enteredCode =
+        document.getElementById("joinCode").value.trim().toUpperCase();
+
+    if (enteredCode === "") {
+
+        alert("Please enter a team code.");
+
+        return;
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please login first.");
+
+        window.location.href = "index.html";
+
+        return;
+    }
+
+    try {
+
+        // Find the team using its code
+        const teamQuery = query(
+            collection(db, "teams"),
+            where("code", "==", enteredCode)
+        );
+
+        const snapshot =
+            await getDocs(teamQuery);
+
+        if (snapshot.empty) {
+
+            document.getElementById("joinMessage").textContent =
+                "Team code not found. Check the code and try again.";
+
+            return;
+        }
+
+        // Get the team
+        const teamDoc = snapshot.docs[0];
+
+        const teamId = teamDoc.id;
+
+        const teamData = teamDoc.data();
+
+
+        // Add user to the team's members
+        await updateDoc(
+            doc(db, "teams", teamId),
+            {
+                members: arrayUnion(user.uid)
+            }
+        );
+
+
+        // Save team ID in user's profile
+        await updateDoc(
+            doc(db, "users", user.uid),
+            {
+                teamId: teamId
+            }
+        );
+
+
+        document.getElementById("joinMessage").textContent =
+            "You joined " + teamData.name + "! 🎉";
+
+        alert("Team joined successfully! 🎉");
+        continueAfterTeamSetup();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Could not join team: " + error.message);
+
+    }
+
+};
+
+function continueAfterTeamSetup() {
+    const photoFlow =
+        sessionStorage.getItem(
+            "requireInitialPhoto"
+        );
+
+    if (
+        photoFlow === "true" ||
+        photoFlow === "optional"
+    ) {
+        window.location.href = "send-photo.html";
+        return;
+    }
+
+    window.location.href = "home.html";
+}
+
+</script>
+</body>
+</html>

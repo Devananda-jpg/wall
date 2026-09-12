@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Send Embarrassing Photos</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Courier New", monospace;
+        }
+
+
+        body {
+            background: #f4f4f4;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+
+        .header h1 {
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+
+        /* FRIENDS */
+
+        .friends {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+
+        .friend-card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .friend-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+
+            background: #222;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            font-size: 18px;
+
+            margin-right: 12px;
+        }
+
+
+        .friend-name {
+            font-size: 19px;
+            font-weight: bold;
+            color: #222;
+        }
+
+
+        .photo-count {
+            font-size: 13px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+
+        .upload-label {
+            display: block;
+
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+
+            padding: 18px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            color: #555;
+
+            transition: 0.2s;
+        }
+
+
+        .upload-label:hover {
+            border-color: #222;
+            background: #fafafa;
+        }
+
+
+        .upload-label span {
+            display: block;
+
+            font-size: 28px;
+
+            margin-bottom: 6px;
+        }
+
+
+        input[type="file"] {
+            display: none;
+        }
+
+
+        .selected-file {
+            margin-top: 10px;
+
+            font-size: 13px;
+
+            color: green;
+
+            display: none;
+        }
+
+
+        /* BOTTOM */
+
+        .bottom-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+
+        .message {
+            margin-bottom: 15px;
+
+            font-size: 14px;
+
+            color: #777;
+        }
+
+
+        .continue-btn {
+            padding: 13px 35px;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: #222;
+            color: white;
+
+            transition: 0.2s;
+        }
+
+
+        .continue-btn:hover {
+            background: #444;
+        }
+
+
+        .continue-btn:disabled {
+            background: #ccc;
+            color: #888;
+
+            cursor: not-allowed;
+        }
+
+
+        .warning {
+            color: #d9534f;
+
+            display: none;
+
+            margin-bottom: 15px;
+
+            font-size: 14px;
+        }
+
+
+        .success {
+            color: green;
+
+            display: none;
+
+            margin-bottom: 15px;
+
+            font-size: 14px;
+        }
+
+
+        .loading {
+            text-align: center;
+
+            color: #777;
+
+            padding: 30px;
+
+            grid-column: 1 / -1;
+        }
+
+        body {
+            background: #080808;
+            color: #f4f0e6;
+            font-family: "Courier New", monospace;
+        }
+
+        body,
+        button,
+        input {
+            font-family: "Courier New", monospace;
+        }
+
+        .friend-card {
+            background: #151515;
+            border: 1px solid #343434;
+            box-shadow: 8px 8px 0 #000, 0 0 25px rgba(45, 226, 194, 0.14);
+        }
+
+        .friend-name {
+            color: #f4f0e6;
+        }
+
+        .photo-count,
+        .header p,
+        .message,
+        .loading {
+            color: #aaa;
+        }
+
+        .header h1,
+        .header p,
+        .friend-card,
+        .bottom-section,
+        .bottom-section button,
+        .bottom-section .message,
+        .bottom-section .warning,
+        .bottom-section .success {
+            font-family: "Courier New", monospace;
+        }
+
+        .avatar {
+            background: #2de2c2;
+            color: #111;
+        }
+
+        .upload-label {
+            border-color: #555;
+            color: #ddd;
+            background: #0d0d0d;
+        }
+
+        .upload-label:hover {
+            border-color: #2de2c2;
+            background: #102f2c;
+        }
+
+        .selected-file {
+            color: #8ee69a;
+        }
+
+        .continue-btn {
+            background: #2de2c2;
+            color: #111;
+        }
+
+        .continue-btn:hover {
+            background: #8ff9e7;
+        }
+
+        .continue-btn:disabled {
+            background: #333;
+            color: #777;
+        }
+
+        .skip-btn {
+            margin-top: 12px;
+            padding: 10px 22px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .skip-btn:hover {
+            border-color: #2de2c2;
+            color: #8ff9e7;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .friends {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                Wall of Shame
+            </h1>
+
+            <p>
+                Upload at least one embarrassing photo of a friend.
+            </p>
+
+        </div>
+
+
+
+        <!-- FRIENDS -->
+
+        <div
+            class="friends"
+            id="friendsList"
+        >
+
+            <div class="loading">
+                Loading team members...
+            </div>
+
+        </div>
+
+
+
+        <!-- CONTINUE -->
+
+        <div class="bottom-section">
+
+            <div
+                class="warning"
+                id="warning"
+            >
+                ⚠️ Please upload at least one embarrassing photo
+                for a friend to continue.
+            </div>
+
+
+            <div
+                class="success"
+                id="success"
+            >
+                ✅ Photo uploaded! You can continue.
+            </div>
+
+
+            <div class="message">
+
+                You need to upload at least one photo
+                to enter the Wall of Shame!
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                id="continueBtn"
+                disabled
+                onclick="continueToHome()"
+            >
+                Continue →
+            </button>
+
+            <button
+                class="skip-btn"
+                id="skipBtn"
+                type="button"
+                onclick="skipPhotoUpload()"
+            >
+                Skip for now
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         FIREBASE + SUPABASE
+    ========================= -->
+
+    <script type="module">
+
+        import {
+            db,
+            auth
+        }
+        from "./firebase-config.js";
+
+
+        import {
+            doc,
+            getDoc,
+            collection,
+            getDocs,
+            query,
+            where,
+            updateDoc
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        import {
+            supabase
+        }
+        from "./supabase-config.js";
+
+
+
+        /* =========================
+           VARIABLES
+        ========================= */
+
+        let photoUploaded = false;
+
+        const photoRequirement =
+            sessionStorage.getItem(
+                "requireInitialPhoto"
+            );
+
+        const skipButton =
+            document.getElementById(
+                "skipBtn"
+            );
+
+        if (
+            photoRequirement !==
+            "optional"
+        ) {
+            skipButton.style.display =
+                "none";
+        }
+
+        if (
+            photoRequirement ===
+            "optional"
+        ) {
+            document.getElementById(
+                "continueBtn"
+            ).disabled = false;
+        }
+
+
+
+        /* =========================
+           LOAD TEAM MEMBERS
+        ========================= */
+
+        async function loadTeamMembers(user) {
+
+            const friendsList =
+                document.getElementById(
+                    "friendsList"
+                );
+
+
+            try {
+
+                /*
+                 * Get current user's
+                 * user document.
+                 */
+
+                const userRef =
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    );
+
+
+                const userSnap =
+                    await getDoc(
+                        userRef
+                    );
+
+
+                if (!userSnap.exists()) {
+
+                    friendsList.innerHTML = `
+                        <div class="loading">
+                            User information not found.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                const userData =
+                    userSnap.data();
+
+
+                /*
+                 * Get team ID.
+                 */
+
+                let teamId =
+                    userData.teamId;
+
+                if (!teamId) {
+                    const teamQuery =
+                        query(
+                            collection(db, "teams"),
+                            where(
+                                "members",
+                                "array-contains",
+                                user.uid
+                            )
+                        );
+
+                    const teamSnapshot =
+                        await getDocs(teamQuery);
+
+                    if (!teamSnapshot.empty) {
+                        teamId = teamSnapshot.docs[0].id;
+
+                        await updateDoc(
+                            userRef,
+                            {
+                                teamId: teamId
+                            }
+                        );
+                    }
+                }
+
+
+                if (!teamId) {
+
+                    friendsList.innerHTML = `
+                        <div class="loading">
+                            You have not joined a team yet.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                /*
+                 * Get team document.
+                 */
+
+                const teamRef =
+                    doc(
+                        db,
+                        "teams",
+                        teamId
+                    );
+
+
+                const teamSnap =
+                    await getDoc(
+                        teamRef
+                    );
+
+
+                if (!teamSnap.exists()) {
+
+                    friendsList.innerHTML = `
+                        <div class="loading">
+                            Team not found.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                const teamData =
+                    teamSnap.data();
+
+
+                /*
+                 * Get members array.
+                 */
+
+                const memberIds =
+                    teamData.members || [];
+
+
+                friendsList.innerHTML = "";
+
+
+                /*
+                 * Get information about
+                 * every team member.
+                 */
+
+                for (
+                    const memberId
+                    of memberIds
+                ) {
+
+                    /*
+                     * Don't show yourself.
+                     */
+
+                    if (
+                        memberId ===
+                        user.uid
+                    ) {
+
+                        continue;
+
+                    }
+
+
+                    const memberRef =
+                        doc(
+                            db,
+                            "users",
+                            memberId
+                        );
+
+
+                    const memberSnap =
+                        await getDoc(
+                            memberRef
+                        );
+
+
+                    if (
+                        !memberSnap.exists()
+                    ) {
+
+                        continue;
+
+                    }
+
+
+                    const memberData =
+                        memberSnap.data();
+
+
+                    createFriendCard(
+                        memberId,
+                        memberData
+                    );
+
+                }
+
+
+                /*
+                 * If there are no other
+                 * members.
+                 */
+
+                if (
+                    friendsList.children.length === 0
+                ) {
+
+                    friendsList.innerHTML = `
+                        <div class="loading">
+                            No other team members yet.
+                        </div>
+                    `;
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading team members:",
+                    error
+                );
+
+
+                friendsList.innerHTML = `
+                    <div class="loading">
+                        Could not load team members.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================
+           CREATE FRIEND CARD
+        ========================= */
+
+        function createFriendCard(
+            memberId,
+            memberData
+        ) {
+
+            const friendsList =
+                document.getElementById(
+                    "friendsList"
+                );
+
+
+            const name =
+                memberData.name ||
+                "Unknown Member";
+
+
+            const firstLetter =
+                name.charAt(0).toUpperCase();
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "friend-card";
+
+
+            card.innerHTML = `
+
+                <div class="friend-info">
+
+                    <div class="avatar">
+                        ${firstLetter}
+                    </div>
+
+
+                    <div>
+
+                        <div class="friend-name">
+                            ${name}
+                        </div>
+
+                        <div class="photo-count">
+                            📸 Upload a photo
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <label class="upload-label">
+
+                    <span>📸</span>
+
+                    Upload Embarrassing Photo
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                    >
+
+                </label>
+
+
+                <div
+                    class="selected-file"
+                >
+                    ✅ Photo selected
+                </div>
+
+            `;
+
+
+            friendsList.appendChild(
+                card
+            );
+
+
+            /*
+             * Get the file input
+             */
+
+            const input =
+                card.querySelector(
+                    'input[type="file"]'
+                );
+
+
+            const selectedMessage =
+                card.querySelector(
+                    ".selected-file"
+                );
+
+
+            /*
+             * When photo is selected
+             */
+
+            input.addEventListener(
+                "change",
+                async function() {
+
+                    if (
+                        input.files.length === 0
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const file =
+                        input.files[0];
+
+
+                    /*
+                     * Show selected
+                     * immediately.
+                     */
+
+                    selectedMessage.style.display =
+                        "block";
+
+
+                    /*
+                     * Create a unique path.
+                     *
+                     * Example:
+                     * memberUID/123_photo.jpg
+                     */
+
+                    const safeFileName =
+                        file.name.replace(
+                            /[^a-zA-Z0-9._-]/g,
+                            "_"
+                        );
+
+                    const fileName =
+                        memberId +
+                        "/" +
+                        Date.now() +
+                        "_" +
+                        safeFileName;
+
+
+                    try {
+
+                        const {
+                            data,
+                            error
+                        } =
+                            await supabase.storage
+                                .from(
+                                    "wall-of-shame-photos"
+                                )
+                                .upload(
+                                    fileName,
+                                    file,
+                                    {
+                                        cacheControl:
+                                            "3600",
+                                        upsert:
+                                            false
+                                    }
+                                );
+
+
+                        if (error) {
+
+                            throw error;
+
+                        }
+
+
+                        console.log(
+                            "Photo uploaded:",
+                            data
+                        );
+
+                        if (
+                            !data ||
+                            !data.path
+                        ) {
+                            throw new Error(
+                                "Storage did not return the uploaded photo path."
+                            );
+                        }
+
+                        photoUploaded = true;
+
+                        document.getElementById(
+                            "continueBtn"
+                        ).disabled = false;
+
+                        document.getElementById(
+                            "success"
+                        ).style.display =
+                            "block";
+
+                        document.getElementById(
+                            "warning"
+                        ).style.display =
+                            "none";
+
+
+                        alert(
+                            "Photo uploaded successfully! 🎉"
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+                        selectedMessage.style.display =
+                            "none";
+
+
+                        alert(
+                            "Photo upload failed: " +
+                            error.message
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           CONTINUE
+        ========================= */
+
+        window.continueToHome =
+            function() {
+
+                if (
+                    photoUploaded ||
+                    photoRequirement ===
+                    "optional"
+                ) {
+
+                    sessionStorage.removeItem(
+                        "requireInitialPhoto"
+                    );
+
+                    window.location.href =
+                        "home.html";
+
+                }
+
+                else {
+
+                    document.getElementById(
+                        "warning"
+                    ).style.display =
+                        "block";
+
+                }
+
+            };
+
+        window.skipPhotoUpload =
+            function() {
+                if (
+                    photoRequirement !==
+                    "optional"
+                ) {
+                    return;
+                }
+
+                sessionStorage.removeItem(
+                    "requireInitialPhoto"
+                );
+
+                window.location.href =
+                    "home.html";
+            };
+
+
+
+        /* =========================
+           CHECK LOGIN
+        ========================= */
+
+        auth.onAuthStateChanged(
+            function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+
+                }
+
+
+                loadTeamMembers(user);
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

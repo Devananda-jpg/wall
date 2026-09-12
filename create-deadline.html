@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Deadline - Wall of Shame</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            color: #222;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 20px 40px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #333;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #eee;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background: #ddd;
+        }
+
+        .create-btn {
+            background: #222;
+            color: white;
+        }
+
+        .create-btn:hover {
+            background: #000;
+        }
+
+        /* Countdown */
+        .countdown-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .countdown-title {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .time-box {
+            background: #222;
+            color: white;
+            padding: 12px 10px;
+            border-radius: 8px;
+            min-width: 65px;
+        }
+
+        .time-box span {
+            display: block;
+        }
+
+        .time-number {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .time-label {
+            font-size: 10px;
+            margin-top: 4px;
+            color: #ccc;
+        }
+
+        /* Result */
+        .result {
+            display: none;
+            text-align: center;
+        }
+
+        .result-icon {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 15px;
+            position: relative;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 0;
+            margin-bottom: 15px;
+        }
+
+        .result-icon::before {
+            content: "";
+            position: absolute;
+            left: 23px;
+            top: 11px;
+            width: 5px;
+            height: 20px;
+            background: #ffffff;
+        }
+
+        .result-icon::after {
+            content: "";
+            position: absolute;
+            left: 23px;
+            bottom: 10px;
+            width: 5px;
+            height: 5px;
+            background: #ffffff;
+        }
+
+        .result h2 {
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .deadline-info {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .deadline-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .wall-btn {
+            width: 100%;
+            background: #222;
+            color: white;
+            padding: 13px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .wall-btn:hover {
+            background: #000;
+        }
+
+        /* Missed deadline */
+        .missed {
+            color: #d32f2f;
+        }
+
+        .missed-box {
+            background: #fff0f0;
+            border: 1px solid #ffcccc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        body {
+            background: #080808;
+            color: #f4f0e6;
+            font-family: "Courier New", monospace;
+        }
+
+        body,
+        button,
+        input {
+            font-family: "Courier New", monospace;
+        }
+
+        header,
+        .card {
+            background: #151515;
+            border-color: #343434;
+        }
+
+        header {
+            border-bottom-color: #343434;
+        }
+
+        header p,
+        .subtitle,
+        .result p,
+        .countdown-title {
+            color: #aaa;
+        }
+
+        .result-icon,
+        .result-icon::before,
+        .result-icon::after {
+            border-color: #ffffff;
+        }
+
+        input {
+            background: #0d0d0d;
+            color: #f4f0e6;
+            border-color: #3b3b3b;
+        }
+
+        input:focus {
+            border-color: #2de2c2;
+        }
+
+        .cancel-btn {
+            background: #292929;
+            color: #ddd;
+        }
+
+        .create-btn,
+        .wall-btn {
+            background: #2de2c2;
+            color: #111;
+        }
+
+        .create-btn:hover,
+        .wall-btn:hover {
+            background: #8ff9e7;
+        }
+
+        .countdown-box,
+        .deadline-info {
+            background: #0d0d0d;
+            border-color: #343434;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .countdown {
+                gap: 6px;
+            }
+
+            .time-box {
+                min-width: 55px;
+                padding: 10px 5px;
+            }
+
+            .time-number {
+                font-size: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Wall of Shame</h1>
+        <p>Accountability has consequences.</p>
+    </header>
+
+
+    <!-- Main -->
+    <div class="container">
+
+        <!-- Create Deadline Card -->
+        <div class="card" id="deadlineCard">
+
+            <h2>Create Your Deadline</h2>
+
+            <p class="subtitle">
+                Set a task. Set a deadline. Don't end up on the wall.
+            </p>
+
+
+            <!-- Task -->
+            <div class="form-group">
+                <label for="task">What do you need to finish?</label>
+
+                <input
+                    type="text"
+                    id="task"
+                    placeholder="Example: Finish my project"
+                >
+            </div>
+
+
+            <!-- Date -->
+            <div class="form-group">
+                <label for="date">Deadline Date</label>
+
+                <input
+                    type="date"
+                    id="date"
+                >
+            </div>
+
+
+            <!-- Time -->
+            <div class="form-group">
+                <label for="time">Deadline Time</label>
+
+                <input
+                    type="time"
+                    id="time"
+                >
+            </div>
+
+
+            <!-- Countdown -->
+            <div
+                class="countdown-box"
+                id="countdownBox"
+                style="display: none;"
+            >
+
+                <div class="countdown-title">
+                    Time remaining
+                </div>
+
+                <div class="countdown">
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="days"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            DAYS
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="hours"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            HOURS
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="minutes"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            MINUTES
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="seconds"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            SECONDS
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                <button
+                    class="cancel-btn"
+                    onclick="cancelDeadline()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="create-btn"
+                    onclick="createDeadline()"
+                >
+                    Create My Deadline
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Result Card -->
+        <div
+            class="card result"
+            id="resultCard"
+        >
+
+            <div
+                class="result-icon"
+                id="resultIcon"
+            >
+            </div>
+
+
+            <h2 id="resultTitle">
+                Your Deadline Is Set!
+            </h2>
+
+
+            <p id="resultMessage">
+                Better get it done before the timer hits zero.
+            </p>
+
+
+            <div class="deadline-info">
+
+                <strong id="taskDisplay">
+                    Your task
+                </strong>
+
+                <span id="deadlineDisplay">
+                    Deadline
+                </span>
+
+            </div>
+
+
+            <!-- Countdown after creation -->
+            <div
+                class="countdown-box"
+                id="resultCountdownBox"
+            >
+
+                <div class="countdown-title">
+                    Time remaining
+                </div>
+
+                <div class="countdown">
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="resultDays"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            DAYS
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="resultHours"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            HOURS
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="resultMinutes"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            MINUTES
+                        </span>
+                    </div>
+
+
+                    <div class="time-box">
+                        <span
+                            class="time-number"
+                            id="resultSeconds"
+                        >
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            SECONDS
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Go to Wall -->
+            <button
+                class="wall-btn"
+                onclick="goToWall()"
+            >
+                Go to Wall of Shame →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script type="module">
+
+    import { db, auth } from "./firebase-config.js";
+
+    import {
+        collection,
+        addDoc,
+        doc,
+        getDoc,
+        getDocs,
+        query,
+        where
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    let deadlineTime;
+    let countdownInterval;
+
+
+    // Create Deadline
+    window.createDeadline = async function() {
+
+        const task =
+            document.getElementById("task").value.trim();
+
+        const date =
+            document.getElementById("date").value;
+
+        const time =
+            document.getElementById("time").value;
+
+
+        // Check task
+        if (task === "") {
+            alert("Please enter your task.");
+            return;
+        }
+
+
+        // Check date
+        if (date === "") {
+            alert("Please select a deadline date.");
+            return;
+        }
+
+
+        // Check time
+        if (time === "") {
+            alert("Please select a deadline time.");
+            return;
+        }
+
+
+        // Create deadline date
+        deadlineTime = new Date(date + "T" + time);
+
+
+        // Check if deadline is in the past
+        if (deadlineTime <= new Date()) {
+            alert("Please choose a future date and time.");
+            return;
+        }
+
+
+        // Check login
+        const user = auth.currentUser;
+
+        if (!user) {
+            alert("Please login first.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        let userSnap =
+            await getDoc(
+                doc(db, "users", user.uid)
+            );
+
+        if (!userSnap.exists()) {
+            alert("Your team information could not be found.");
+            return;
+        }
+
+        let teamId =
+            userSnap.data().teamId;
+
+        if (!teamId) {
+            const teamQuery =
+                query(
+                    collection(db, "teams"),
+                    where(
+                        "members",
+                        "array-contains",
+                        user.uid
+                    )
+                );
+
+            const teamSnapshot =
+                await getDocs(teamQuery);
+
+            if (!teamSnapshot.empty) {
+                teamId = teamSnapshot.docs[0].id;
+            }
+        }
+
+        if (!teamId) {
+            alert("Join a team before creating a deadline.");
+            return;
+        }
+
+
+        try {
+
+            // Save deadline to Firebase
+            await addDoc(
+                collection(db, "deadlines"),
+                {
+                    task: task,
+                    deadline: deadlineTime,
+                    createdBy: user.uid,
+                    teamId: teamId,
+                    status: "active"
+                }
+            );
+
+
+            alert("Deadline created successfully!");
+
+
+            // Display task
+            document.getElementById("taskDisplay")
+                .textContent = task;
+
+
+            // Display deadline
+            document.getElementById("deadlineDisplay")
+                .textContent =
+                "Deadline: " +
+                deadlineTime.toLocaleString();
+
+
+            // Hide form
+            document.getElementById("deadlineCard")
+                .style.display = "none";
+
+
+            // Show result
+            document.getElementById("resultCard")
+                .style.display = "block";
+
+
+            // Start countdown
+            startCountdown();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not create deadline: " +
+                error.message
+            );
+
+        }
+    };
+
+
+    // Start countdown
+    function startCountdown() {
+
+        updateCountdown();
+
+        countdownInterval =
+            setInterval(
+                updateCountdown,
+                1000
+            );
+    }
+
+
+    // Update countdown
+    function updateCountdown() {
+
+        const now = new Date();
+
+        const difference =
+            deadlineTime - now;
+
+
+        // Deadline reached
+        if (difference <= 0) {
+
+            clearInterval(countdownInterval);
+
+            showMissedDeadline();
+
+            return;
+        }
+
+
+        const days =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        const hours =
+            Math.floor(
+                (difference %
+                    (1000 * 60 * 60 * 24)) /
+                (1000 * 60 * 60)
+            );
+
+
+        const minutes =
+            Math.floor(
+                (difference %
+                    (1000 * 60 * 60)) /
+                (1000 * 60)
+            );
+
+
+        const seconds =
+            Math.floor(
+                (difference %
+                    (1000 * 60)) /
+                1000
+            );
+
+
+        document.getElementById("resultDays")
+            .textContent = formatTime(days);
+
+        document.getElementById("resultHours")
+            .textContent = formatTime(hours);
+
+        document.getElementById("resultMinutes")
+            .textContent = formatTime(minutes);
+
+        document.getElementById("resultSeconds")
+            .textContent = formatTime(seconds);
+    }
+
+
+    // Add leading zero
+    function formatTime(value) {
+
+        return value
+            .toString()
+            .padStart(2, "0");
+    }
+
+
+    // Deadline missed
+    function showMissedDeadline() {
+
+        const resultTitle =
+            document.getElementById("resultTitle");
+
+        const resultMessage =
+            document.getElementById("resultMessage");
+
+        const resultIcon =
+            document.getElementById("resultIcon");
+
+        const countdownBox =
+            document.getElementById("resultCountdownBox");
+
+
+        resultIcon.textContent = "";
+
+        resultTitle.textContent =
+            "DEADLINE MISSED!";
+
+        resultTitle.classList.add("missed");
+
+
+        resultMessage.textContent =
+            "You didn't finish on time. You're going on the Wall of Shame!";
+
+
+        countdownBox.style.display = "none";
+
+
+        document.querySelector(".deadline-info")
+            .classList.add("missed-box");
+    }
+
+
+    // Cancel
+    window.cancelDeadline = function() {
+
+        window.location.href = "home.html";
+
+    };
+
+
+    // Go to Wall
+    window.goToWall = function() {
+
+        window.location.href = "home.html";
+
+    };
+
+</script>
+
+</body>
+</html>
